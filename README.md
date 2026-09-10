@@ -1,7 +1,7 @@
 # SEF-Project starter repository for Surabaya Campus - Semester 2 - 2025
 
 ## Brief Project Documentation
-Add the required details as listed in the Project Specification
+Final Project for Software Engineering Fundamentals, simple warehouse management system
 
 ### Group Name:
 
