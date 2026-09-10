@@ -1,0 +1,178 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Users - WMS</title>
+  <link rel="stylesheet" href="{% static 'hello/css/master.css' %}" />
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    .admin-only {
+      /* no nav here but kept for consistency if needed */
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Warehouse Management System</h1>
+  <div>
+    Date: <span id="current-date"></span> |
+    User: <strong id="user-name">Guest</strong> |
+    <a href="#" id="logout-btn" style="color: lightblue; text-decoration: underline;">Logout</a>
+  </div>
+</header>
+
+<nav>
+  <a href="{% url 'index' %}">Dashboard</a>
+  <a href="{% url 'employee_registration' %}" class="admin-only">User (Employee) Registration Form</a>
+  <a href="{% url 'user_profile' %}">User Profile Form</a>
+  <a href="{% url 'client_registration' %}" class="admin-only">Client Registration Form</a>
+  <a href="{% url 'item_registration' %}" class="admin-only">Item Registration Form</a>
+  <a href="{% url 'goods_receipt' %}">Goods Receipt Form</a>
+  <a href="{% url 'approval_goods_receipt' %}">Approval of Goods Receipt Form</a>
+  <a href="{% url 'stock_taking' %}">Stocktaking Form</a>
+  <a href="{% url 'goods_release' %}">Goods Release Form</a>
+  <a href="{% url 'approval_goods_release' %}">Approval of Goods Release Form</a>
+  <a href="{% url 'users_list' %}">All Users</a> 
+</nav>
+
+</nav>
+
+<div class="container">
+  <h2>All User Accounts</h2>
+  <table id="usersTable">
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+  (function() {
+    // Show current date
+    document.getElementById("current-date").textContent = new Date().toLocaleDateString();
+
+    // Get current user and verify admin
+    var currentUser = sessionStorage.getItem("username");
+    var userNameElem = document.getElementById("user-name");
+
+    if (!currentUser) {
+      alert("Please login first.");
+      window.location.href = "{% url 'login' %}";
+      return;
+    }
+    if (userNameElem) userNameElem.textContent = currentUser;
+
+    var admins = ['admin1', 'admin2'];
+    if (!admins.includes(currentUser)) {
+      alert("Access denied: Admins only.");
+      window.location.href = "{% url 'index' %}";
+      return;
+    }
+
+    // Dummy users data (add more as needed)
+    var usersData = {
+      admin1: {
+        userId: "001",
+        fullName: "Admin One",
+        email: "admin1@gmail.com",
+        role: "Admin"
+      },
+      admin2: {
+        userId: "002",
+        fullName: "Admin Two",
+        email: "admin2@gmail.com",
+        role: "Admin"
+      },
+      employee1: {
+        userId: "E101",
+        fullName: "Jane Employee",
+        email: "jane.employee@example.com",
+        role: "Employee"
+      },
+      employee2: {
+        userId: "E102",
+        fullName: "John Employee",
+        email: "john.employee@example.com",
+        role: "Employee"
+      }
+    };
+
+    var tbody = document.querySelector("#usersTable tbody");
+    for (var username in usersData) {
+      var user = usersData[username];
+      var row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${user.userId}</td>
+        <td>${username}</td>
+        <td>${user.fullName}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+      `;
+      tbody.appendChild(row);
+    }
+
+    // Logout button
+    var logoutBtn = document.getElementById("logout-btn");
+    logoutBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      if(confirm("Are you sure you want to log out?")) {
+        sessionStorage.removeItem("username");
+        window.location.href = "{% url 'login' %}";
+      }
+    });
+  })();
+</script>
+
+</body>
+</html> -->
+
+<!-- ... your HTML header/nav ... -->
+
+<div class="container">
+  <h2>All User Accounts</h2>
+  <table id="usersTable">
+    <thead> ... </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script src="{% static 'hello/js/auth.js' %}"></script>
+
+<script>
+  // User list rendering code only (no login/role checks here)
+  (function() {
+    var usersData = { };
+    var tbody = document.querySelector("#usersTable tbody");
+    for (var username in usersData) {
+      var user = usersData[username];
+      var row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${user.userId}</td>
+        <td>${username}</td>
+        <td>${user.fullName}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+      `;
+      tbody.appendChild(row);
+    }
+  })();
+</script>

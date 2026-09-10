@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Registration Form</title>
+  <link rel="stylesheet" href="{% static 'hello/css/master.css' %}">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, button { margin: 10px 0; padding: 8px; width: 300px; }
+    .error { color: red; font-size: 0.9em; }
+    .form-group { margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+
+<script>
+  if (!sessionStorage.getItem("username")) {
+    window.location.href = "{% url 'login' %}";
+
+  }
+</script>
+
+<header>
+  <h1>Warehouse Management System</h1>
+  <div>
+    Date: <span id="current-date"></span> |
+    User: <strong id="user-name"></strong>
+    <a href="#" id="logout-btn" style="color: lightblue; text-decoration: underline;">Logout</a>
+  </div>
+</header>
+
+<nav>
+  <a href="{% url 'employee_registration' %}">User (Employee) Registration Form</a>
+  <a href="{% url 'user_profile' %}">User Profile Form</a>
+  <a href="{% url 'client_registration' %}">Client Registration Form</a>
+  <a href="{% url 'item_registration' %}">Item Registration Form</a>
+  <a href="{% url 'goods_receipt' %}">Goods Receipt Form</a>
+  <a href="{% url 'approval_goods_receipt' %}">Approval of Goods Receipt Form</a>
+  <a href="{% url 'stock_taking' %}">Stocktaking Form</a>
+  <a href="{% url 'goods_release' %}">Goods Release Form</a>
+  <a href="{% url 'approval_goods_release' %}">Approval of Goods Release Form</a>
+</nav>
+
+<div class="container">
+  <h3>Warehouse Management System (WMS) Application</h3>
+  <h2>User Registration Form<br>XY Warehouse, LLC.</h2>
+
+  <form id="registrationForm" novalidate>
+    <div class="form-group">
+      <label for="fullName">Full Name *</label>
+      <input type="text" id="fullName" name="fullName" required />
+      <div class="error" id="fullNameError"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Residential Address *</label>
+      <input type="text" id="address" name="address" required />
+      <div class="error" id="addressError"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="contactPhone">Contact Phone (optional)</label>
+      <input type="text" id="contactPhone" name="contactPhone" />
+      <div class="error" id="contactPhoneError"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="mobilePhone">Mobile Phone *</label>
+      <input type="text" id="mobilePhone" name="mobilePhone" required />
+      <div class="error" id="mobilePhoneError"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="dob">Date of Birth *</label>
+      <input type="date" id="dob" name="dob" required />
+      <div class="error" id="dobError"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address *</label>
+      <input type="email" id="email" name="email" required />
+      <div class="error" id="emailError"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password *</label>
+      <input type="password" id="password" name="password" required />
+      <div class="error" id="passwordError"></div>
+    </div>
+
+    <button type="submit">Register</button>
+    <button type="reset">Cancel</button>
+  </form>
+</div>
+
+{% load static %}
+<script src="{% static 'hello/js/employeeRegisForm.js' %}"></script>
+
+<script>
+  document.getElementById("current-date").textContent = new Date().toLocaleDateString();
+
+  const currentUser = sessionStorage.getItem("username") || "Guest";
+  document.getElementById("user-name").textContent = currentUser;
+
+  document.getElementById("logout-btn").addEventListener("click", function (e) {
+    e.preventDefault();
+    const confirmLogout = confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      sessionStorage.removeItem("username");
+      window.location.href = "{% url 'login' %}";
+
+    }
+  });
+
+  if (!sessionStorage.getItem("username")) {
+    document.querySelector("nav").style.display = "none";
+    document.getElementById("logout-btn").style.display = "none";
+  }
+</script>
+
+</body>
+</html>

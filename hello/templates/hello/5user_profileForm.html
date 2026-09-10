@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile Form</title>
+  <link rel="stylesheet" href="{% static 'hello/css/master.css' %}">
+</head>
+<body>
+
+  <script>
+    if (!sessionStorage.getItem("username")) {
+    window.location.href = "{% url 'login' %}";
+
+    }
+  </script>
+
+  <header>
+    <h1>Warehouse Management System</h1>
+    <div>
+      Date: <span id="current-date"></span> |
+      User: <strong id="user-name"></strong>
+      <a href="#" id="logout-btn" style="color: lightblue; text-decoration: underline;">Logout</a>
+    </div>
+  </header>
+
+  <nav>
+  <a href="{% url 'employee_registration' %}">User (Employee) Registration Form</a>
+  <a href="{% url 'user_profile' %}">User Profile Form</a>
+  <a href="{% url 'client_registration' %}">Client Registration Form</a>
+  <a href="{% url 'item_registration' %}">Item Registration Form</a>
+  <a href="{% url 'goods_receipt' %}">Goods Receipt Form</a>
+  <a href="{% url 'approval_goods_receipt' %}">Approval of Goods Receipt Form</a>
+  <a href="{% url 'stock_taking' %}">Stocktaking Form</a>
+  <a href="{% url 'goods_release' %}">Goods Release Form</a>
+  <a href="{% url 'approval_goods_release' %}">Approval of Goods Release Form</a>
+  </nav>
+
+  <div class="container">
+    <h3>Warehouse Management System (WMS) Application</h3>
+    <h2>User Profile</h2>
+
+    <div id="profile-container">
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("current-date").textContent = new Date().toLocaleDateString();
+
+    const currentUser = sessionStorage.getItem("username") || "Guest";
+    document.getElementById("user-name").textContent = currentUser;
+
+    document.getElementById("logout-btn").addEventListener("click", function (e) {
+      e.preventDefault();
+      const confirmLogout = confirm("Are you sure you want to log out?");
+      if (confirmLogout) {
+        sessionStorage.removeItem("username");
+      window.location.href = "{% url 'login' %}";
+
+      }
+    });
+    if (!sessionStorage.getItem("username")) {
+    document.querySelector("nav").style.display = "none";
+    document.getElementById("logout-btn").style.display = "none";
+    }
+
+    const userData = {
+      admin1: {
+        userId: "001",
+        fullName: "Admin One",
+        email: "admin1@gmail.com",
+        phone: "+62 812-3456-7890",
+        role: "Admin",
+        address: "Jl. Merdeka No.1, Jakarta",
+      }
+    };
+
+    const profileContainer = document.getElementById("profile-container");
+
+    if (userData[currentUser]) {
+      const data = userData[currentUser];
+      profileContainer.innerHTML = `
+        <p><strong>User ID:</strong> ${data.userId}</p>
+        <p><strong>Full Name:</strong> ${data.fullName}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Phone Number:</strong> ${data.phone}</p>
+        <p><strong>User Role:</strong> ${data.role}</p>
+        <p><strong>Address:</strong> ${data.address}</p>
+      `;
+    } else {
+      profileContainer.innerHTML = `<p style="color:red;">No profile data found for this user.</p>`;
+    }
+  </script>
+  
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Approval Of Goods Release Form</title>
+  <link rel="stylesheet" href="{% static 'hello/css/master.css' %}">
+</head>
+<body>
+
+<script>
+    if (!sessionStorage.getItem("username")) {
+    window.location.href = "{% url 'login' %}";
+
+    }
+</script>
+
+<header>
+    <h1>Warehouse Management System</h1>
+    <div>
+        Date: <span id="current-date"></span> |
+        User: <strong id="user-name"></strong>
+        <a href="#" id="logout-btn" style="color: lightblue; text-decoration: underline;">Logout</a>
+    </div>
+</header>
+
+<nav>
+  <a href="{% url 'employee_registration' %}">User (Employee) Registration Form</a>
+  <a href="{% url 'user_profile' %}">User Profile Form</a>
+  <a href="{% url 'client_registration' %}">Client Registration Form</a>
+  <a href="{% url 'item_registration' %}">Item Registration Form</a>
+  <a href="{% url 'goods_receipt' %}">Goods Receipt Form</a>
+  <a href="{% url 'approval_goods_receipt' %}">Approval of Goods Receipt Form</a>
+  <a href="{% url 'stock_taking' %}">Stocktaking Form</a>
+  <a href="{% url 'goods_release' %}">Goods Release Form</a>
+  <a href="{% url 'approval_goods_release' %}">Approval of Goods Release Form</a>
+</nav>
+
+<div class="container">
+    <h2>Warehouse Management System (WMS) Application</h2>
+    <h3>Approval of Goods Release Form<br>XY Warehouse, LLC.</h3>
+
+    <form id="release-form">
+        <label>Enter Release Form Number: </label>
+        <input type="text" id="releaseFormNumber">
+        <button type="button" onclick="fillData()">Find</button>
+
+        <br><br>
+
+        <table class="form-table">
+            <tr><td>Date:</td><td><input type="date" id="date"></td></tr>
+            <tr><td>Warehouse Location:</td><td><input type="text" id="warehouseLocation"></td></tr>
+            <tr><td>Client Name:</td><td><input type="text" id="clientName"></td></tr>
+            <tr><td>Client Address:</td><td><input type="text" id="clientAddress"></td></tr>
+            <tr><td>Prepared By:</td><td><input type="text" id="preparedBy"></td></tr>
+            <tr><td>Transporter Name:</td><td><input type="text" id="transporterName"></td></tr>
+            <tr><td>Vehicle No:</td><td><input type="text" id="vehicleNo"></td></tr>
+            <tr><td>Driver Name:</td><td><input type="text" id="driverName"></td></tr>
+        </table>
+
+        <br><b>Goods Details</b><br><br>
+
+        <table border="1" cellspacing="0" cellpadding="5" width="100%" id="goodsTable">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <br>
+        <div class="form-buttons">
+            <button type="submit">Save</button>
+            <button type="reset">Cancel</button>
+        </div>
+        <br>
+            <div class="form-group">
+      <label>Checked By:</label>
+      <input type="text" placeholder="">
+      <button type="button">Find Employee</button>
+    </div>
+
+    <div class="form-group">
+      <label>Approved By:</label>
+      <input type="text" placeholder="">
+      <button type="button">Find Employee</button>
+    </div>
+
+    <div class="form-group">
+      <label>Approval Date:</label>
+      <input type="date" value="">
+    </div>
+
+    <div class="form-group">
+      <label>Remarks/Notes:</label><br>
+      <textarea rows="4" style="width:100%;"></textarea>
+    </div>
+
+    </form>
+</div>
+
+{% load static %}
+<script src="{% static 'hello/js/approvalReleaseForm.js' %}"></script>
+
+<script>
+    document.getElementById("current-date").textContent = new Date().toLocaleDateString();
+
+    const currentUser = sessionStorage.getItem("username") || "Guest";
+    document.getElementById("user-name").textContent = currentUser;
+
+    document.getElementById("logout-btn").addEventListener("click", function (e) {
+        e.preventDefault();
+        const confirmLogout = confirm("Are you sure you want to log out?");
+        if (confirmLogout) {
+            sessionStorage.removeItem("username");
+        window.location.href = "{% url 'login' %}";
+
+        }
+    });
+</script>
+
+</body>
+</html>
+
+

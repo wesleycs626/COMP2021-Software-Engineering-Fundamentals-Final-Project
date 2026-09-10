@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Goods Release Form</title>
+  <link rel="stylesheet" href="{% static 'hello/css/master.css' %}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .form-group {
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input, select, button {
+      padding: 8px;
+      width: 300px;
+    }
+    .error {
+      color: red;
+      font-size: 0.85em;
+    }
+    .error-input {
+      border: 2px solid red;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 6px;
+      text-align: left;
+    }
+  </style>
+
+</head>
+<body>
+
+  <script>
+    if (!sessionStorage.getItem("username")) {
+    window.location.href = "{% url 'login' %}";
+
+    }
+  </script>
+
+<header>
+  <h1>Warehouse Management System</h1>
+  <div>
+    Date: <span id="current-date"></span> |
+    User: <strong id="user-name"></strong>
+    <a href="#" id="logout-btn" style="color: lightblue; text-decoration: underline;">Logout</a>
+
+  </div>
+</header>
+
+<nav>
+  <a href="{% url 'employee_registration' %}">User (Employee) Registration Form</a>
+  <a href="{% url 'user_profile' %}">User Profile Form</a>
+  <a href="{% url 'client_registration' %}">Client Registration Form</a>
+  <a href="{% url 'item_registration' %}">Item Registration Form</a>
+  <a href="{% url 'goods_receipt' %}">Goods Receipt Form</a>
+  <a href="{% url 'approval_goods_receipt' %}">Approval of Goods Receipt Form</a>
+  <a href="{% url 'stock_taking' %}">Stocktaking Form</a>
+  <a href="{% url 'goods_release' %}">Goods Release Form</a>
+  <a href="{% url 'approval_goods_release' %}">Approval of Goods Release Form</a>
+</nav>
+
+<div class="container">
+  <h3>Warehouse Management System (WMS) Application</h3>
+  <h2>Goods Release Form<br>XY Warehouse, LLC.</h2>
+
+<form id="goodsForm">
+  <div class="form-group">
+    <label for="clientCode">Client Code *</label>
+    <input type="text" id="clientCode">
+    <div class="error" id="clientCodeError"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="clientName">Client Name *</label>
+    <input type="text" id="clientName">
+    <div class="error" id="clientNameError"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="itemCode">Item Code *</label>
+    <input type="text" id="itemCode">
+    <div class="error" id="itemCodeError"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="itemName">Item Name *</label>
+    <input type="text" id="itemName">
+    <div class="error" id="itemNameError"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="itemUnit">Item Unit *</label>
+    <select id="itemUnit">
+      <option value="">Select Unit</option>
+      <option value="Carton">Carton</option>
+      <option value="PCS">PCS</option>
+      <option value="BOX">BOX</option>
+      <option value="Unit">Unit</option>
+    </select>
+    <div class="error" id="itemUnitError"></div>
+  </div>
+
+  <button type="button" onclick="validateAndAddItem()">Add Item</button>
+  <br><br>
+  <button type="submit">Save</button>
+</form>
+
+
+  <table id="goodsTable">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Item Code</th>
+        <th>Item Name</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  {% load static %}
+  <script src="{% static 'hello/js/goodsReleaseForm.js' %}"></script>
+
+<script>
+  document.getElementById("current-date").textContent = new Date().toLocaleDateString();
+
+const currentUser = sessionStorage.getItem("username") || "Guest";
+document.getElementById("user-name").textContent = currentUser;
+
+document.getElementById("logout-btn").addEventListener("click", function (e) {
+  e.preventDefault();
+  const confirmLogout = confirm("Are you sure you want to log out?");
+  if (confirmLogout) {
+    sessionStorage.removeItem("username");
+    window.location.href = "{% url 'login' %}";
+
+  }
+});
+if (!sessionStorage.getItem("username")) {
+    document.querySelector("nav").style.display = "none";
+    document.getElementById("logout-btn").style.display = "none";
+}
+</script>
+
+</body>
+</html>

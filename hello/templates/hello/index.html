@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WMS Dashboard</title>
+  <link rel="stylesheet" href="{% static 'hello/css/master.css' %}">
+</head>
+<body>
+
+<header>
+  <h1>Warehouse Management System</h1>
+  <div>
+    Date: <span id="current-date"></span> |
+    User: <strong>{{ username }}</strong> |
+    <a href="#" id="logout-link" style="color: lightblue;">Logout</a>
+  </div>
+</header>
+
+<nav>
+  <a href="{% url 'employee_registration' %}">User (Employee) Registration Form</a>
+  <a href="{% url 'user_profile' %}">User Profile Form</a>
+  <a href="{% url 'client_registration' %}">Client Registration Form</a>
+  <a href="{% url 'item_registration' %}">Item Registration Form</a>
+  <a href="{% url 'goods_receipt' %}">Goods Receipt Form</a>
+  <a href="{% url 'approval_goods_receipt' %}">Approval of Goods Receipt Form</a>
+  <a href="{% url 'stock_taking' %}">Stocktaking Form</a>
+  <a href="{% url 'goods_release' %}">Goods Release Form</a>
+  <a href="{% url 'approval_goods_release' %}">Approval of Goods Release Form</a>
+</nav>
+
+<div class="container">
+  <h2>Welcome to the Warehouse Management System!</h2>
+  <p>Please select a module from the menu to get started.</p>
+</div>
+
+<script>
+  document.getElementById("current-date").textContent = new Date().toLocaleDateString();
+
+  document.getElementById("logout-link").addEventListener("click", function (e) {
+    e.preventDefault();
+    window.location.href = "{% url 'login' %}";
+
+  });
+</script>
+
+</body>
+</html>

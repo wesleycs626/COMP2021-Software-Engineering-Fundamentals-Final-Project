@@ -1,0 +1,15 @@
+
+Interation 1
+Temporary Navigation links:
+
+User (Employee) Registration Form
+User Login Form
+User Profile Form
+Client Registration Form
+Item Registration Form
+Good Receipt Form
+Approval of Good Receipt Form
+Stocktaking Form
+Good Release Form
+Approval of Good Release Form
+any other forms that your team identify as being necessary for the web application.

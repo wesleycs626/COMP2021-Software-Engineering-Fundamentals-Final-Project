@@ -1,0 +1,228 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Login Form</title>
+  <link rel="stylesheet" href="{% static 'hello/css/master.css' %}"></head>
+<body>
+
+<header>
+  <h1>Warehouse Management System</h1>
+  <div>
+    Date: <span id="current-date"></span> |
+    User: <strong id="user-name">Guest</strong>
+    <a href="#" id="logout-btn" style="color: lightblue; text-decoration: underline;">Logout</a>
+  </div>
+</header>
+
+<div class="container">
+  <h3>Warehouse Management System (WMS) Application</h3>
+  <h2>User Login Form<br>XY Warehouse, LLC.</h2>
+
+  <div id="error-msg" class="error-message" style="display: none;"></div>
+
+  <form id="login-form">
+    <form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" class="input-text">
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" class="input-text">
+    </div>
+
+    <div class="form-group">
+      <button type="submit">Login</button>
+      <button type="reset">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<script>
+    
+  document.getElementById("current-date").textContent = new Date().toLocaleDateString();
+
+  const currentUser = sessionStorage.getItem("username");
+  if (currentUser) {
+    document.getElementById("user-name").textContent = currentUser;
+  }
+
+  const loginForm = document.getElementById("login-form");
+  const errorMsg = document.getElementById("error-msg");
+
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (username === "admin1" && password === "123456") {
+        sessionStorage.setItem("username", username);
+      window.location.href = "{% url 'index' %}";
+      } else {
+        errorMsg.textContent = "Invalid username or password.";
+        errorMsg.style.display = "block";
+      }
+    });
+  
+  document.getElementById("logout-btn").addEventListener("click", function (e) {
+  e.preventDefault();
+  const confirmLogout = confirm("Are you sure you want to log out?");
+  if (confirmLogout) {
+    sessionStorage.clear();
+    window.location.href = "{% url 'login' %}";
+
+  }
+});
+if (!sessionStorage.getItem("username")) {
+    document.querySelector("nav").style.display = "none";
+    document.getElementById("logout-btn").style.display = "none";
+  }
+
+</script>
+
+</body>
+</html> -->
+
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Login Form</title>
+  <link rel="stylesheet" href="{% static 'hello/css/master.css' %}">
+</head>
+<body>
+
+<header>
+  <h1>Warehouse Management System</h1>
+  <div>
+    Date: <span id="current-date"></span> |
+    User: <strong id="user-name">Guest</strong>
+    <a href="#" id="logout-btn" style="color: lightblue; text-decoration: underline;">Logout</a>
+  </div>
+</header>
+
+<div class="container">
+  <h3>Warehouse Management System (WMS) Application</h3>
+  <h2>User Login Form<br>XY Warehouse, LLC.</h2>
+
+  {% if error %}
+    <div id="error-msg" class="error-message">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" id="login-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="form-group">
+      <button type="submit">Login</button>
+      <button type="reset">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.getElementById("current-date").textContent = new Date().toLocaleDateString();
+
+  const currentUser = sessionStorage.getItem("username");
+  if (currentUser) {
+    document.getElementById("user-name").textContent = currentUser;
+  }
+
+  document.getElementById("logout-btn").addEventListener("click", function (e) {
+    e.preventDefault();
+    const confirmLogout = confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      sessionStorage.clear();
+      window.location.href = "{% url 'login' %}";
+    }
+  });
+</script>
+
+</body>
+</html> -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Warehouse Management System</title>
+  <link rel="stylesheet" href="{% static 'hello/css/master.css' %}">
+</head>
+<body>
+
+<header>
+  <h1>Warehouse Management System</h1>
+  <div>
+    Date: <span id="current-date"></span> |
+    User: <strong>Guest</strong>
+  </div>
+</header>
+
+<div class="container">
+  <h3>Warehouse Management System (WMS) Application</h3>
+  <h2>User Login Form<br>XY Warehouse, LLC.</h2>
+
+  {% if error %}
+    <div class="error-message" style="color: red;">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="{% url 'index' %}" id="login_Form">
+    {% csrf_token %}
+    
+    <div class="form-group">
+      <label for="{{ form.username.id_for_label }}">Username:</label>
+       <input type="text" id="username" name="username" placeholder="Enter your username" required>
+       <div class="error-message" id="usernameError"></div>
+      {{ form.username }}
+    </div>
+    
+    <div class="form-group">
+      <label for="{{ form.password.id_for_label }}">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      <div class="error-message" id="passwordError"></div>
+      {{ form.password }}
+    </div>
+
+    <div class="form-group">
+      <button type="submit" onclick="checkemptyinput(input)">Login</button>
+      <button type="reset">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.getElementById("current-date").textContent = new Date().toLocaleDateString(); 
+  const loginForm = document.getElementById("login_Form");
+      loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (username === "admin1" && password === "123456") {
+        sessionStorage.setItem("username", username);
+      window.location.href = "{% url 'index' %}";
+      } else {
+        errorMsg.textContent = "Invalid username or password.";
+        errorMsg.style.display = "block";
+      }
+    });
+
+</script>
+
+<!-- {% load static %}
+<script src="{% static 'hello/js/employeeRegisForm.js' %}">
+</script> -->
+
+</body>
+</html>
+
+
